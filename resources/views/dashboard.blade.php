@@ -30,7 +30,7 @@
                     </li>
                     <li class="nav-item">
                         <a class="nav-link{{ Request::is('upload') ? ' active' : '' }}"
-                            href="{{ route('upload') }}">Upload</a>
+                            href={{ route('posts.index') }}>Upload</a>
                     </li>
 
                 </ul>

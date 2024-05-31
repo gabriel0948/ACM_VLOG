@@ -14,17 +14,17 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
 
-Route::get('/Dashboard', function () {
+
+Route::get('/', function () {
     return view('dashboard');
 })->name('dashboard');
 
-Route::get('/Uploads', function () {
-    return view('posts.index');
+Route::get('/uploads', function () {
+    return view('uploads');
 })->name('upload');
 
+
+Route::resource('posts', PostController::class);
 
 Route::post('/submit-form', [PostController::class, 'StoredPost'])->name('submit.form');

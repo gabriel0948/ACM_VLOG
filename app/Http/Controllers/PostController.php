@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -9,13 +10,17 @@ class PostController extends Controller
 {
     public function index()
     {
-        $posts = DB::table('vlog_post')->get();
-        return view('posts.index')->with('posts', $posts);
+        try {
+            $posts = DB::table('vlog_post')->get();
+            return view('uploads', compact('posts'));
+        } catch (QueryException $e) {
+            // Log or handle the exception
+            return response()->view('errors.500', [], 500);
+        }
     }
 
-    public function StoredPost(Request $request)
+    public function store(Request $request)
     {
-
 
         $validatedData = $request->validate([
             'title' => 'required|string|max:255',

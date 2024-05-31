@@ -29,8 +29,8 @@
                             href="{{ route('dashboard') }}">Dashboard</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link{{ Request::is('uploads') ? ' active' : '' }}"
-                            href="{{ route('posts.uploads') }}">Upload</a>
+                        <a class="nav-link{{ Request::is('upload') ? ' active' : '' }}"
+                            href={{ route('posts.index') }}>Upload</a>
                     </li>
 
                 </ul>
@@ -65,7 +65,8 @@
                                     <td>{{ $post->title }}</td>
                                     <td>{{ $post->description }}</td>
                                     <td>
-                                        <!-- Add action links here -->
+                                        <button type="button"class="btn btn-danger">Delete</button>
+                                        <button type="button"class="btn btn-warning">Edit</button>
                                     </td>
                                 </tr>
                             @endforeach
@@ -87,7 +88,7 @@
                     <h5 class="modal-title" id="exampleModalLabel">Create Post</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <form action="POST" action="{{ route('submit.form') }}" id="postForm" enctype="multipart/form-data">
+                <form action="POST" action="{{ route('posts.store') }}" id="postForm" enctype="multipart/form-data">
                     @csrf
                     <div class="modal-body">
 
@@ -127,15 +128,14 @@
                 var formData = new FormData($('#postForm')[0]);
 
                 $.ajax({
-                    url: "{{ route('submit.form') }}",
+                    url: $(this).attr('action'),
                     method: "POST",
                     data: formData,
                     contentType: false,
                     processData: false,
                     success: function(response) {
                         alert(response.message)
-
-                        $('#ModalVlogPost').modal('hide');
+                        location.reload();
 
                     },
                     error: function(xhr, status, error) {
